@@ -1,31 +1,53 @@
+ import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import DashboardPage from "./pages/DashboardPage";
+
+function ProtectedRoute({ children }) {
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+  return isLoggedIn ? children : <Navigate to="/login" />;
+}
 
 function App() {
-  const path = window.location.pathname;
+  const location = useLocation();
 
-  let page;
-
-  if (path === "/login") {
-    page = <LoginPage />;
-  } else if (path === "/register") {
-    page = <RegisterPage />;
-  } else {
-    page = <HomePage />;
-  }
+  const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
-    <div>
-      <Navbar />
+    <div className="flex flex-col min-h-screen">
+      {!isDashboard && <Navbar />}
 
-      <main>
-        {page}
+      <main className="flex-1 flex flex-col">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+
+          <Route path="/register" element={<RegisterPage />} />
+
+          <Route path="/login" element={<LoginPage />} />
+
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </main>
 
-      <Footer />
+      {!isDashboard && <Footer />}
     </div>
   );
 }
