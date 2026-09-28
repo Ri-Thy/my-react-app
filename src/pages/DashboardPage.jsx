@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 
-import DashboardHeader from "../components/DashboardHeader";
-import Sidebar from "../components/Sidebar";
 import StatCard from "../components/StatCard";
 import ProfileCard from "../components/ProfileCard";
 import ActivityList from "../components/ActivityList";
 
 import { studentService } from "../services/studentService";
-
+import useAuth from "../hooks/useAuth";
 export default function DashboardPage() {
   const [students, setStudents] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -139,55 +137,65 @@ export default function DashboardPage() {
     loadStudents();
   }, []);
 
-  // Dashboard statistics
-  const [stats] = useState([
-    {
-      title: "Total Users",
-      value: 1200,
-      color: "bg-blue-600"
-    },
-    {
-      title: "Orders",
-      value: 340,
-      color: "bg-green-600"
-    },
-    {
-      title: "Revenue",
-      value: "$8,500",
-      color: "bg-purple-600"
-    },
-    {
-      title: "Messages",
-      value: 89,
-      color: "bg-orange-500"
-    }
-  ]);
+// Dashboard statistics
+const totalStudents = students.length;
+
+const activeStudents = students.filter(
+  (student) => student.status?.toLowerCase() === "active"
+).length;
+
+const inactiveStudents = students.filter(
+  (student) => student.status?.toLowerCase() === "inactive"
+).length;
+
+const itStudents = students.filter(
+  (student) =>
+    student.major?.toLowerCase().includes("information technology") ||
+    student.major?.toLowerCase() === "it"
+).length;
+
+const stats = [
+  {
+    title: "Total Students",
+    value: totalStudents,
+    color: "bg-blue-600"
+  },
+  {
+    title: "Active Students",
+    value: activeStudents,
+    color: "bg-green-600"
+  },
+  {
+    title: "Inactive Students",
+    value: inactiveStudents,
+    color: "bg-red-600"
+  },
+  {
+    title: "IT Students",
+    value: itStudents,
+    color: "bg-purple-600"
+  }
+];
 
   // Recent activities
-  const [activities] = useState([
-    "New user registered",
-    "Order #1001 has been placed",
-    "Payment received successfully",
-    "Profile information updated"
-  ]);
+const [activities] = useState([
+  "Student information loaded from Firebase",
+  "Student management system is ready",
+  "Student profile is available",
+  "Dashboard statistics updated"
+]);
 
-  // Current user
-  const savedUser = JSON.parse(localStorage.getItem("user"));
+  // Current Firebase user
+const { user: firebaseUser } = useAuth();
 
-  const user = {
-    name: savedUser?.name || "Guest User",
-    role: "Student",
-    email: savedUser?.email || "No email"
-  };
+const user = {
+  name: firebaseUser?.displayName || "Kheng Rithy",
+  role: "Student",
+  email: firebaseUser?.email || "No email"
+};
 
-  return (
-    <div className="min-h-screen bg-slate-100 flex">
-      <Sidebar />
-
-      <div className="flex-1">
-        <DashboardHeader />
-
-        <main className="p-6 space-y-6">
+ return (
+  <main className="min-h-screen bg-slate-100 p-6 space-y-6">
 
           {/* Add / Update Student Form */}
           <div className="bg-white rounded-lg shadow p-6">
@@ -447,8 +455,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-        </main>
-      </div>
-    </div>
+         </main>
   );
 }

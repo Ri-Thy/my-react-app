@@ -1,32 +1,48 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
   });
+
+  const [error, setError] = useState("");
 
   function handleChange(e) {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
 
-    localStorage.setItem("user", JSON.stringify(formData));
-    localStorage.setItem("isLoggedIn", "true");
+    try {
+      await register(formData.email, formData.password);
 
-    alert("Registration successful!");
+      alert("Registration successful!");
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
 
-    navigate("/dashboard");
-    window.location.reload();
+      if (error.code === "auth/email-already-in-use") {
+        setError("This email is already registered.");
+      } else if (error.code === "auth/weak-password") {
+        setError("Password should be at least 6 characters.");
+      } else if (error.code === "auth/invalid-email") {
+        setError("Please enter a valid email address.");
+      } else {
+        setError("Registration failed. Please try again.");
+      }
+    }
   }
 
   return (
@@ -35,6 +51,12 @@ export default function RegisterPage() {
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
           Create Account
         </h2>
+
+        {error && (
+          <p className="mb-4 text-center text-sm text-red-600">
+            {error}
+          </p>
+        )}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
@@ -48,6 +70,7 @@ export default function RegisterPage() {
               placeholder="Your name"
               value={formData.name}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
             />
           </div>
@@ -63,6 +86,7 @@ export default function RegisterPage() {
               placeholder="you@example.com"
               value={formData.email}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
             />
           </div>
@@ -78,6 +102,7 @@ export default function RegisterPage() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
             />
           </div>

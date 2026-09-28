@@ -1,12 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
-  const menus = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Analytics", path: "/analytics" },
-    { name: "Users", path: "/users" },
-    { name: "Settings", path: "/settings" },
-  ];
+const menus = [
+  { name: "Dashboard", path: "/dashboard" },
+  { name: "Students", path: "/students" },
+];
 
   return (
     <aside className="hidden md:flex md:flex-col w-64 bg-white text-slate-800 min-h-screen p-6">

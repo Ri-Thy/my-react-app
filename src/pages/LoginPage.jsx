@@ -1,40 +1,48 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
+
+  const [error, setError] = useState("");
 
   function handleChange(e) {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
 
-    const savedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (
-      savedUser &&
-      savedUser.email === formData.email &&
-      savedUser.password === formData.password
-    ) {
-      localStorage.setItem("isLoggedIn", "true");
+    try {
+      await login(formData.email, formData.password);
 
       alert("Login successful!");
-
       navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
 
-      window.location.reload();
-    } else {
-      alert("Invalid email or password");
+      if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        setError("Invalid email or password.");
+      } else if (error.code === "auth/invalid-email") {
+        setError("Please enter a valid email address.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
     }
   }
 
@@ -49,6 +57,12 @@ export default function LoginPage() {
           Login to your account
         </p>
 
+        {error && (
+          <p className="mb-4 text-center text-sm text-red-600">
+            {error}
+          </p>
+        )}
+
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -61,6 +75,7 @@ export default function LoginPage() {
               placeholder="you@example.com"
               value={formData.email}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
             />
           </div>
@@ -76,6 +91,7 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
             />
           </div>

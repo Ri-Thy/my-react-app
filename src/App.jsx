@@ -1,54 +1,77 @@
- import {
+import {
   Routes,
   Route,
   Navigate,
-  useLocation,
 } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import PublicLayout from "./layouts/PublicLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
-
-function ProtectedRoute({ children }) {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-
-  return isLoggedIn ? children : <Navigate to="/login" />;
-}
+import StudentsPage from "./pages/StudentsPage";
 
 function App() {
-  const location = useLocation();
-
-  const isDashboard = location.pathname.startsWith("/dashboard");
-
   return (
-    <div className="flex flex-col min-h-screen">
-      {!isDashboard && <Navbar />}
+    <Routes>
+      {/* Public pages */}
+      <Route
+        path="/"
+        element={
+          <PublicLayout>
+            <HomePage />
+          </PublicLayout>
+        }
+      />
 
-      <main className="flex-1 flex flex-col">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+      <Route
+        path="/login"
+        element={
+          <PublicLayout>
+            <LoginPage />
+          </PublicLayout>
+        }
+      />
 
-          <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/register"
+        element={
+          <PublicLayout>
+            <RegisterPage />
+          </PublicLayout>
+        }
+      />
 
-          <Route path="/login" element={<LoginPage />} />
+      {/* Protected Dashboard */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <DashboardPage />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </main>
+      {/* Protected Students */}
+      <Route
+        path="/students"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <StudentsPage />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
 
-      {!isDashboard && <Footer />}
-    </div>
+      {/* Unknown URL */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
