@@ -182,3 +182,185 @@
     border-right-color: var(--border);
   }
 }
+/* ========================================
+PROFESSIONAL PORTFOLIO ANIMATIONS
+======================================== */
+
+/* Smooth scrolling when clicking navigation links */
+html {
+scroll-behavior: smooth;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(25px);
+}
+
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* Animate the hero section */
+#home > div {
+animation: fadeInUp 0.9s ease-out both;
+}
+
+/* Animate section headings */
+#about h2,
+#skills h2,
+#projects h2,
+#contact h2 {
+animation: fadeInUp 0.8s ease-out both;
+}
+
+/* Professional hover effects for About cards */
+#about .grid > div {
+transition:
+transform 0.3s ease,
+box-shadow 0.3s ease,
+border-color 0.3s ease;
+}
+
+#about .grid > div:hover {
+transform: translateY(-8px);
+box-shadow: 0 15px 35px rgba(56, 189, 248, 0.12);
+border-color: #38bdf8;
+}
+
+/* Professional hover effects for skill cards */
+#skills .grid > div {
+transition:
+transform 0.3s ease,
+background-color 0.3s ease,
+box-shadow 0.3s ease;
+}
+
+#skills .grid > div:hover {
+transform: translateY(-7px) scale(1.03);
+background-color: #193256;
+box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+}
+
+/* Professional hover effects for project cards */
+#projects .grid > div {
+transition:
+transform 0.3s ease,
+box-shadow 0.3s ease,
+border-color 0.3s ease;
+}
+
+#projects .grid > div:hover {
+transform: translateY(-8px);
+box-shadow: 0 15px 35px rgba(56, 189, 248, 0.15);
+border-color: #38bdf8;
+}
+
+/* Gentle floating animation for profile picture */
+@keyframes floatProfile {
+0%,
+100% {
+transform: translateY(0);
+}
+
+50% {
+transform: translateY(-8px);
+}
+}
+
+#home img {
+animation: floatProfile 4s ease-in-out infinite;
+transition: box-shadow 0.3s ease;
+}
+
+#home img:hover {
+box-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
+}
+
+/* Improve contact form focus effects */
+#contact input,
+#contact textarea {
+transition:
+border-color 0.3s ease,
+box-shadow 0.3s ease;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+border-color: #38bdf8;
+box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* Smooth contact button hover effect */
+#contact button {
+transition:
+transform 0.2s ease,
+background-color 0.3s ease,
+box-shadow 0.3s ease;
+}
+
+#contact button:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+}
+
+/* Improve the Contact Me button */
+#home a {
+transition:
+transform 0.2s ease,
+background-color 0.3s ease,
+box-shadow 0.3s ease;
+}
+
+#home a:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+}
+
+/* Make mobile screens more comfortable */
+@media (max-width: 640px) {
+#home h1 {
+font-size: 2.5rem;
+line-height: 1.2;
+}
+
+#about h2,
+#skills h2,
+#projects h2,
+#contact h2 {
+font-size: 2rem;
+}
+
+#about .grid > div,
+#projects .grid > div {
+padding: 1.5rem;
+}
+}
+
+/* Respect visitors who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+html {
+scroll-behavior: auto;
+}
+
+#home > div,
+#about h2,
+#skills h2,
+#projects h2,
+#contact h2,
+#home img {
+animation: none;
+}
+
+#about .grid > div,
+#skills .grid > div,
+#projects .grid > div,
+#contact button,
+#home a {
+transition: none;
+}
+}
+
