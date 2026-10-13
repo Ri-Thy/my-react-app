@@ -154,62 +154,113 @@ return (
   </section>
 
   {/* Projects Section */}
-  <section id="projects" className="py-20 bg-[#0A192F] text-white">
-    <div className="max-w-6xl mx-auto px-6">
+<section id="projects" className="py-20 bg-[#0A192F] text-white">
+  <div className="max-w-6xl mx-auto px-6">
 
-      <h2 className="text-4xl font-bold text-center mb-12">
-        My Projects
-      </h2>
+    <p className="text-sky-400 text-center font-semibold tracking-widest mb-3">
+      WHAT I'VE BUILT
+    </p>
 
-      <div className="grid md:grid-cols-3 gap-8">
+    <h2 className="text-4xl font-bold text-center mb-4">
+      My Projects
+    </h2>
 
-        <div className="bg-[#112240] p-8 rounded-xl shadow-lg border border-slate-700">
-          <h3 className="text-2xl font-bold mb-4">
-            Portfolio Website
-          </h3>
+    <p className="text-slate-400 text-center max-w-2xl mx-auto mb-12">
+      Here are some of my projects and practical experiences as a Year 4 IT student.
+    </p>
 
-          <p className="mb-4 text-slate-300 leading-7">
-            A responsive personal portfolio website created using React
-            and Tailwind CSS.
-          </p>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          <span className="text-sky-400 font-semibold">
-            React + Tailwind
-          </span>
-        </div>
+      {/* Project 1 */}
+      <div className="bg-[#112240] p-8 rounded-xl shadow-lg border border-slate-700 hover:border-sky-400 hover:-translate-y-2 transition duration-300">
 
-        <div className="bg-[#112240] p-8 rounded-xl shadow-lg border border-slate-700">
-          <h3 className="text-2xl font-bold mb-4">
-            JavaScript Project
-          </h3>
+        <div className="text-4xl mb-5"></div>
 
-          <p className="mb-4 text-slate-300 leading-7">
-            An interactive website demonstrating JavaScript functionality.
-          </p>
+        <h3 className="text-2xl font-bold mb-4">
+          Personal Portfolio Website
+        </h3>
 
-          <span className="text-sky-400 font-semibold">
-            JavaScript
-          </span>
-        </div>
+        <p className="mb-6 text-slate-300 leading-7">
+          A personal portfolio website introducing my background, technical
+          skills, education, and projects. Built using React and Tailwind CSS.
+        </p>
 
-        <div className="bg-[#112240] p-8 rounded-xl shadow-lg border border-slate-700">
-          <h3 className="text-2xl font-bold mb-4">
-            Learning Project
-          </h3>
+        <p className="text-sky-400 font-semibold mb-6">
+          React · Tailwind CSS · JavaScript
+        </p>
 
-          <p className="mb-4 text-slate-300 leading-7">
-            A project created to practice modern web development technologies.
-          </p>
-
-          <span className="text-sky-400 font-semibold">
-            Web Development
-          </span>
-        </div>
+        <a
+          href="https://github.com/Ri-Thy/my-react-app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg font-semibold transition"
+        >
+          View on GitHub →
+        </a>
 
       </div>
-    </div>
-  </section>
 
+      {/* Project 2 */}
+      <div className="bg-[#112240] p-8 rounded-xl shadow-lg border border-slate-700 hover:border-sky-400 hover:-translate-y-2 transition duration-300">
+
+        <div className="text-4xl mb-5"></div>
+
+        <h3 className="text-2xl font-bold mb-4">
+          Student Management System
+        </h3>
+
+        <p className="mb-6 text-slate-300 leading-7">
+          A student management application that allows users to manage student
+          records and view student information through a web interface.
+        </p>
+
+        <p className="text-sky-400 font-semibold mb-6">
+          Laravel · PHP · SQLite
+        </p>
+
+        <a
+          href="https://github.com/Ri-Thy/lab3-student-management"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg font-semibold transition"
+        >
+          View on GitHub →
+        </a>
+
+      </div>
+
+      {/* Project 3 */}
+      <div className="bg-[#112240] p-8 rounded-xl shadow-lg border border-slate-700 hover:border-sky-400 hover:-translate-y-2 transition duration-300">
+
+        <div className="text-4xl mb-5"></div>
+
+        <h3 className="text-2xl font-bold mb-4">
+          Firebase Student Dashboard
+        </h3>
+
+        <p className="mb-6 text-slate-300 leading-7">
+          A React-based student management dashboard connected to Firebase
+          Firestore for storing and managing student data.
+        </p>
+
+        <p className="text-sky-400 font-semibold mb-6">
+          React · Firebase · Firestore
+        </p>
+
+        <a
+          href="https://github.com/Ri-Thy/my-react-app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg font-semibold transition"
+        >
+          View on GitHub →
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</section>
   {/* Contact Section */}
   <section id="contact" className="py-20 bg-[#0A192F] text-white">
     <div className="max-w-xl mx-auto px-6">
